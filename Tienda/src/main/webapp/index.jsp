@@ -15,7 +15,7 @@
     <div class="d-flex justify-content-center align-items-center flex-column">
     <h1>Bienvenidos a la Tienda Genérica</h1>
     <form action="AuthLogin" method="Post">
-        <label for="usuario">Usuario
+        <label for="usuario">Usuarios
             <input type="text" id="usuario" name="usuario"  class="form-control">
         </label><br>
         <label for="pass">Contraseña
