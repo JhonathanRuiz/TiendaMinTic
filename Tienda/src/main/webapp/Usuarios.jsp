@@ -1,0 +1,246 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+        <% 
+  		  HttpSession misession= (HttpSession) request.getSession();
+    	String cedula = (String) misession.getAttribute("session");
+    	if(cedula == null || cedula == ""){
+			response.sendRedirect("index.jsp");
+    	}
+    %>
+   <%@ page import = "com.unibosque.Service.UserServiceImpl,com.unibosque.Model.Response,com.unibosque.Model.User" %>
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Analytics Dashboard - This is an example dashboard created using build-in elements and components.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+    <meta name="description" content="This is an example dashboard created using build-in elements and components.">
+    <meta name="msapplication-tap-highlight" content="no">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+<link href="assets/css/mainui.css" rel="stylesheet"></head>
+<body>
+    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+        <div class="app-header header-shadow">
+            <div class="app-header__logo">
+                <div class="logo-src">TIENDA</div>
+                <div class="header__pane ml-auto">
+                    <div>
+                        <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="app-header__mobile-menu">
+                <div>
+                    <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="app-header__menu">
+                <span>
+                    <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                        <span class="btn-icon-wrapper">
+                            <i class="fa fa-ellipsis-v fa-w-6"></i>
+                        </span>
+                    </button>
+                </span>
+            </div>    <div class="app-header__content">
+              
+                <div class="app-header-right">
+                    <div class="header-btn-lg pr-0">
+                        <div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left">
+                                    <div class="btn-group">
+                                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                         
+                                            <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                                        </a>
+                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+    
+                                            <button type="button" tabindex="0" class="dropdown-item">Logout</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="widget-content-left  ml-3 header-user-info">
+                                    <div class="widget-heading">
+                                        Alina Mclourd
+                                    </div>
+                                    <div class="widget-subheading">
+                                        VP People Manager
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>        </div>
+            </div>
+        </div>          <div class="app-main">
+                <div class="app-sidebar sidebar-shadow">
+                    <div class="app-header__logo">
+                        <div class="logo-src"></div>
+                        <div class="header__pane ml-auto">
+                            <div>
+                                <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+                                    <span class="hamburger-box">
+                                        <span class="hamburger-inner"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-header__mobile-menu">
+                        <div>
+                            <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="app-header__menu">
+                        <span>
+                            <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                                <span class="btn-icon-wrapper">
+                                    <i class="fa fa-ellipsis-v fa-w-6"></i>
+                                </span>
+                            </button>
+                        </span>
+                    </div>    <div class="scrollbar-sidebar">
+                        <div class="app-sidebar__inner">
+                            <ul class="vertical-nav-menu">
+                                <li class="app-sidebar__heading">Dashboards</li>
+                                <li>
+                                    <a href="Panel.jsp">
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                                        Inicio
+                                    </a>
+                                </li>
+                                 <li>
+                                    <a href="Usuarios.jsp" class="mm-active">
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Usuario
+                                    </a>
+                                </li>
+                                
+                               
+                            </ul>
+                        </div>
+                    </div>
+                </div>    <div class="app-main__outer">
+                    <div class="app-main__inner">
+               
+                        
+                    <div class="col-md-12 order-md-1">
+          <h4 class="mb-3">Usuarios</h4>
+          <form action="UserFuncionality" method="POST">
+              <div class="col-md-6  mb-3 p-0 d-flex">
+                <input type="text" class="form-control" id="cedulacons" name="cedulacons" placeholder="Cedula"><button class="btn btn-primary ml-2" type="submit" name="consultar">Consultar</button>
+                     		<button class="btn btn-primary btn-lg ml-3" type="submit" name="eliminar" value="Eliminar">Eliminar</button>
+                </div>
+          
+          </form>
+          <form class="needs-validation" action="UserFuncionality" method="POST">
+      
+            <div class="row">
+        <input type="text" class="form-control" style="display:none;" id="cedula" name="cedula" value="<% if(request.getAttribute("Response") != null){
+			        	
+                		Response respuesta  = (Response)request.getAttribute("Response");
+				        	if(respuesta.getListado() != null){
+				        		out.print(respuesta.getListado().get(0).getCedula());
+	        				}
+			   		}
+			     	%>">
+            
+              <div class="col-md-6 mb-3">
+                <label for="firstName">Correo</label>
+                <input type="email" class="form-control" id="correo" name="correo" placeholder="example@xxx.com" value="<% if(request.getAttribute("Response") != null){
+			        	
+                		Response respuesta  = (Response)request.getAttribute("Response");
+				        	if(respuesta.getListado() != null){
+				        		out.print(respuesta.getListado().get(0).getCorreo());
+	        				}
+			   		}
+			     	%>" required>
+               
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="lastName">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="" value="<% if(request.getAttribute("Response") != null){
+			        	
+                		Response respuesta  = (Response)request.getAttribute("Response");
+				       	if(respuesta.getListado() != null){
+				        	out.print(respuesta.getListado().get(0).getNombre());
+			        	}
+			   		}
+			     	%>" required>
+               
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="username">Username</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">@</span>
+                </div>
+                <input type="text" class="form-control" name="username" id="username" placeholder="Username" value="<% if(request.getAttribute("Response") != null){
+			        	
+			        	Response respuesta  = (Response)request.getAttribute("Response");
+			        	if(respuesta.getListado() != null){
+			        	out.print(respuesta.getListado().get(0).getUsuario());
+			        	}
+			   		}
+			     	%>" required>
+               
+              </div>
+            </div>
+
+          
+            <div class="mb-3">
+              <label for="address">Contraseña</label>
+              <input type="password" class="form-control" id="password" name="password" required>
+              <div class="invalid-feedback">
+                Please enter your shipping address.
+              </div>
+            </div>
+
+     
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg " type="submit" name="crear" value="Crear">Crear</button>
+     		<button class="btn btn-primary btn-lg " type="submit" name="editar" value="Editar">Editar</button>
+
+                
+          </form>
+        </div>
+
+           </div>
+                     </div>
+                <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+        </div>
+    </div>
+    <script>
+	<% if(request.getAttribute("Response") != null){
+    	
+    	Response respuesta  = (Response)request.getAttribute("Response");
+    
+ 	
+     %>
+     alert('<%out.print(respuesta.Mensaje);%>');
+    <%} %>
+
+    </script>
+<script type="text/javascript" src="./assets/scripts/main.js"></script></body>
+</html>
+    
