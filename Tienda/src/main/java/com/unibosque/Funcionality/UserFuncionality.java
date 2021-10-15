@@ -60,7 +60,7 @@ public class UserFuncionality extends HttpServlet {
 		
 		Response res = new Response();
 		try {
-		String cedula = request.getParameter("cedula");
+		String cedula = request.getParameter("cedulacons");
 
 		if(cedula != null) {
 			
@@ -115,14 +115,14 @@ public class UserFuncionality extends HttpServlet {
 		user.setPassword(request.getParameter("password"));
 		UserServiceImpl service = new UserServiceImpl();
 		res = service.updateUser(user);
-		request.setAttribute("Response", res);
+		request.setAttribute("ResponseProvider", res);
 		request.getRequestDispatcher("Usuarios.jsp").forward(request, response);
 			
 		}  catch(Exception excepcion) {
 			res.Respuesta = "97";
 			res.Mensaje = "Error de procedimiento";
 			res.Listado = null;
-			request.setAttribute("Response", res);
+			request.setAttribute("ResponseProvider", res);
 			request.getRequestDispatcher("Usuarios.jsp").forward(request, response);
 		}
 

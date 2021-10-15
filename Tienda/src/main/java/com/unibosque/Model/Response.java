@@ -12,11 +12,11 @@ public class Response {
 	public List<User> getListado() {
 		return Listado;
 	}
+	
 	public void setListado(List<User> listado) {
 		Listado = listado;
 	}
 
-	
 	public String getRespuesta() {
 		return Respuesta;
 	}

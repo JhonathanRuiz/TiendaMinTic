@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <% 
-  		HttpSession misession= (HttpSession) request.getSession();
+        <% 
+  		  HttpSession misession= (HttpSession) request.getSession();
     	String cedula = (String) misession.getAttribute("session");
     	if(cedula == null || cedula == ""){
 			response.sendRedirect("index.jsp");
     	}
     %>
+   <%@ page import = "com.unibosque.Service.UserServiceImpl,com.unibosque.Model.Response,com.unibosque.Model.User" %>
 <!doctype html>
 <html lang="es">
 
@@ -15,11 +16,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Analytics Dashboard - This is an example dashboard created using build-in elements and components.</title>
+    <title>Productos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
-
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 <link href="assets/css/mainui.css" rel="stylesheet"></head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
@@ -120,7 +122,7 @@
                             <ul class="vertical-nav-menu">
                                 <li class="app-sidebar__heading">Dashboards</li>
                                 <li>
-                                    <a href="Panel.jsp" class="mm-active">
+                                    <a href="Panel.jsp">
                                         <i class="metismenu-icon fa fa-angle-down"></i>
                                         Inicio
                                     </a>
@@ -128,7 +130,40 @@
                                  <li>
                                     <a href="Usuarios.jsp" >
                                         <i class="metismenu-icon fa fa-angle-down"></i>
-                              				Usuario
+                              				Usuarios
+                                    </a>
+                                </li>
+                                   <li>
+                                    <a href="Clientes.jsp" >
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Clientes
+                                    </a>
+                                </li>
+                                
+                                    <li>
+                                    <a href="Proveedores.jsp">
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Proveedores
+                                    </a>
+                                </li>
+                                 <li>
+                                    <a href="Productos.jsp"  class="mm-active">
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Productos
+                                    </a>
+                                </li>
+                                
+                                   <li>
+                                    <a href="Ventas.jsp">
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Ventas
+                                    </a>
+                                </li>
+                                
+                                    <li>
+                                    <a href="Reportes.jsp" >
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Reportes
                                     </a>
                                 </li>
                                 
@@ -138,26 +173,30 @@
                     </div>
                 </div>    <div class="app-main__outer">
                     <div class="app-main__inner">
-                        <div class="app-page-title">
-                            <div class="page-title-wrapper">
-                                <div class="page-title-heading">
-                                    <div class="page-title-icon">
-                                        <i class="fa fa-angle-down">
-                                        </i>
-                                    </div>
-                                    <div>Analytics Dashboard
-                                        <div class="page-title-subheading">This is an example dashboard created using build-in elements and components.
-                                        </div>
-                                    </div>
-                                </div>
-                               </div>
-                        </div>       
-        
+               
+                        
+					    <form method="post" action="fileuploadservlet"  enctype="multipart/form-data">
+								    <input type="file" name="file" class="form-control" accept=".csv" />
+								    <input type="submit" value="Cargar" class="btn btn-primary" />
+					  </form>
+
+  
            </div>
                      </div>
                 <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         </div>
     </div>
+    <script>
+	<% if(request.getAttribute("Response") != null){
+    	
+    	Response respuesta  = (Response)request.getAttribute("Response");
+    
+ 	
+     %>
+     alert('<%out.print(respuesta.Mensaje);%>');
+    <%} %>
+
+    </script>
 <script type="text/javascript" src="./assets/scripts/main.js"></script></body>
 </html>
     

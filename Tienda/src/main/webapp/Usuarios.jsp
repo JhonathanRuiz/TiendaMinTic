@@ -130,7 +130,40 @@
                                  <li>
                                     <a href="Usuarios.jsp" class="mm-active">
                                         <i class="metismenu-icon fa fa-angle-down"></i>
-                              				Usuario
+                              				Usuarios
+                                    </a>
+                                </li>
+                                   <li>
+                                    <a href="Clientes.jsp" >
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Clientes
+                                    </a>
+                                </li>
+                                
+                                    <li>
+                                    <a href="Proveedores.jsp">
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Proveedores
+                                    </a>
+                                </li>
+                                 <li>
+                                    <a href="Productos.jsp" >
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Productos
+                                    </a>
+                                </li>
+                                
+                                   <li>
+                                    <a href="Ventas.jsp">
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Ventas
+                                    </a>
+                                </li>
+                                
+                                    <li>
+                                    <a href="Reportes.jsp" >
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Reportes
                                     </a>
                                 </li>
                                 
@@ -146,22 +179,27 @@
           <h4 class="mb-3">Usuarios</h4>
           <form action="UserFuncionality" method="POST">
               <div class="col-md-6  mb-3 p-0 d-flex">
-                <input type="text" class="form-control" id="cedulacons" name="cedulacons" placeholder="Cedula"><button class="btn btn-primary ml-2" type="submit" name="consultar">Consultar</button>
+                <input type="text" class="form-control" id="cedulacons" name="cedulacons" placeholder="Cedula" required><button class="btn btn-primary ml-2" type="submit" name="consultar">Consultar</button>
                      		<button class="btn btn-primary btn-lg ml-3" type="submit" name="eliminar" value="Eliminar">Eliminar</button>
                 </div>
           
           </form>
-          <form class="needs-validation" action="UserFuncionality" method="POST">
+          <form class="needs-validation" action="UserFuncionality" method="POST" id="form">
       
             <div class="row">
-        <input type="text" class="form-control" style="display:none;" id="cedula" name="cedula" value="<% if(request.getAttribute("Response") != null){
+            
+                  <div class="col-md-12 mb-3">
+                <label for="firstName">Cedula</label>
+                <input type="number" class="form-control" id="cedula" name="cedula" placeholder="" value="<% if(request.getAttribute("Response") != null){
 			        	
                 		Response respuesta  = (Response)request.getAttribute("Response");
 				        	if(respuesta.getListado() != null){
 				        		out.print(respuesta.getListado().get(0).getCedula());
 	        				}
 			   		}
-			     	%>">
+			     	%>" required>
+               
+              </div>
             
               <div class="col-md-6 mb-3">
                 <label for="firstName">Correo</label>
@@ -238,6 +276,7 @@
  	
      %>
      alert('<%out.print(respuesta.Mensaje);%>');
+     document.getElementById("form").reset();
     <%} %>
 
     </script>

@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <% 
-  		HttpSession misession= (HttpSession) request.getSession();
+        <% 
+  		  HttpSession misession= (HttpSession) request.getSession();
     	String cedula = (String) misession.getAttribute("session");
     	if(cedula == null || cedula == ""){
 			response.sendRedirect("index.jsp");
     	}
     %>
+   <%@ page import = "com.unibosque.Service.UserServiceImpl,com.unibosque.Model.ResponseClient,com.unibosque.Model.Client" %>
 <!doctype html>
 <html lang="es">
 
@@ -19,7 +20,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
-
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 <link href="assets/css/mainui.css" rel="stylesheet"></head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
@@ -120,7 +122,7 @@
                             <ul class="vertical-nav-menu">
                                 <li class="app-sidebar__heading">Dashboards</li>
                                 <li>
-                                    <a href="Panel.jsp" class="mm-active">
+                                    <a href="Panel.jsp">
                                         <i class="metismenu-icon fa fa-angle-down"></i>
                                         Inicio
                                     </a>
@@ -128,7 +130,40 @@
                                  <li>
                                     <a href="Usuarios.jsp" >
                                         <i class="metismenu-icon fa fa-angle-down"></i>
-                              				Usuario
+                              				Usuarios
+                                    </a>
+                                </li>
+                                   <li>
+                                    <a href="Clientes.jsp" class="mm-active" >
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Clientes
+                                    </a>
+                                </li>
+                                
+                                    <li>
+                                    <a href="Proveedores.jsp">
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Proveedores
+                                    </a>
+                                </li>
+                                 <li>
+                                    <a href="Productos.jsp" >
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Productos
+                                    </a>
+                                </li>
+                                
+                                   <li>
+                                    <a href="Ventas.jsp">
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Ventas
+                                    </a>
+                                </li>
+                                
+                                    <li>
+                                    <a href="Reportes.jsp" >
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Reportes
                                     </a>
                                 </li>
                                 
@@ -138,26 +173,115 @@
                     </div>
                 </div>    <div class="app-main__outer">
                     <div class="app-main__inner">
-                        <div class="app-page-title">
-                            <div class="page-title-wrapper">
-                                <div class="page-title-heading">
-                                    <div class="page-title-icon">
-                                        <i class="fa fa-angle-down">
-                                        </i>
-                                    </div>
-                                    <div>Analytics Dashboard
-                                        <div class="page-title-subheading">This is an example dashboard created using build-in elements and components.
-                                        </div>
-                                    </div>
-                                </div>
-                               </div>
-                        </div>       
-        
+               
+                        
+                    <div class="col-md-12 order-md-1">
+          <h4 class="mb-3">Clientes</h4>
+          <form action="ClientFuncionality" method="POST">
+              <div class="col-md-6  mb-3 p-0 d-flex">
+                <input type="text" class="form-control" id="cedulacons" name="cedulacons" placeholder="Cedula"><button class="btn btn-primary ml-2" type="submit" name="consultar">Consultar</button>
+                     		<button class="btn btn-primary btn-lg ml-3" type="submit" name="eliminar" value="Eliminar">Eliminar</button>
+                </div>
+          
+          </form>
+          <form class="needs-validation" action="ClientFuncionality" method="POST" id="form">
+      
+            <div class="row">
+            
+           <div class="col-md-12 mb-3">
+                <label for="cedula">Cedula</label>
+                <input type="number" class="form-control" id="cedula" name="cedula" placeholder="" value="<% if(request.getAttribute("ResponseClient") != null){
+			        	
+                		ResponseClient respuesta  = (ResponseClient)request.getAttribute("ResponseClient");
+				        	if(respuesta.getListado() != null){
+				        		out.print(respuesta.getListado().get(0).getCedula());
+	        				}
+			   		}
+			     	%>" required>
+               
+              </div>
+ 
+            
+              <div class="col-md-6 mb-3">
+                <label for="firstName">Correo</label>
+                <input type="email" class="form-control" id="correo" name="correo" placeholder="example@xxx.com" value="<% if(request.getAttribute("ResponseClient") != null){
+			        	
+                		ResponseClient respuesta  = (ResponseClient)request.getAttribute("ResponseClient");
+				        	if(respuesta.getListado() != null){
+				        		out.print(respuesta.getListado().get(0).getCorreo());
+	        				}
+			   		}
+			     	%>" required>
+               
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="lastName">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="" value="<% if(request.getAttribute("ResponseClient") != null){
+			        	
+                		ResponseClient respuesta  = (ResponseClient)request.getAttribute("ResponseClient");
+				       	if(respuesta.getListado() != null){
+				        	out.print(respuesta.getListado().get(0).getNombre());
+			        	}
+			   		}
+			     	%>" required>
+               
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="username">Dirección</label>
+              <div class="input-group">
+                <input type="text" class="form-control" name="direccion" id="direccion" placeholder="Calle ..." value="<% if(request.getAttribute("ResponseClient") != null){
+			        	
+                		ResponseClient respuesta  = (ResponseClient)request.getAttribute("ResponseClient");
+			        	if(respuesta.getListado() != null){
+			        	out.print(respuesta.getListado().get(0).getDireccion());
+			        	}
+			   		}
+			     	%>" required>
+               
+              </div>
+            </div>
+
+          
+            <div class="mb-3">
+              <label for="address">Teléfono</label>
+              <input type="tel" class="form-control" placeholder="+57 XXXXXXXXX" id="tel" name="tel" value="<% if(request.getAttribute("ResponseClient") != null){
+			        	
+                		ResponseClient respuesta  = (ResponseClient)request.getAttribute("ResponseClient");
+			        	if(respuesta.getListado() != null){
+			        	out.print(respuesta.getListado().get(0).getDireccion());
+			        	}
+			   		}
+			     	%>" required>
+             
+            </div>
+
+     
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg " type="submit" name="crear" value="Crear">Crear</button>
+     		<button class="btn btn-primary btn-lg " type="submit" name="editar" value="Editar">Editar</button>
+
+                
+          </form>
+        </div>
+
            </div>
                      </div>
                 <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         </div>
     </div>
+    <script>
+	<% if(request.getAttribute("ResponseClient") != null){
+    	
+		ResponseClient respuesta  = (ResponseClient)request.getAttribute("ResponseClient");
+				
+     %>
+     alert('<%out.print(respuesta.Mensaje);%>');
+	
+    <%} %>
+
+    </script>
 <script type="text/javascript" src="./assets/scripts/main.js"></script></body>
 </html>
     
