@@ -7,16 +7,20 @@
 			response.sendRedirect("index.jsp");
     	}
     %>
-   <%@ page import = "com.unibosque.Service.UserServiceImpl,com.unibosque.Model.Response,com.unibosque.Model.User" %>
+   <%@ page import = "com.unibosque.Service.UserServiceImpl,com.unibosque.Model.ResponseClient,com.unibosque.Model.Client" %>
+
+
 <!doctype html>
+
 <html lang="es">
+
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Productos</title>
+    <title>Analytics Dashboard - This is an example dashboard created using build-in elements and components.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
@@ -134,14 +138,14 @@
                                     </a>
                                 </li>
                                    <li>
-                                    <a href="Clientes.jsp" >
+                                    <a href="Clientes.jsp">
                                         <i class="metismenu-icon fa fa-angle-down"></i>
                               				Clientes
                                     </a>
                                 </li>
                                 
                                     <li>
-                                    <a href="Proveedores.jsp"  >
+                                    <a href="Proveedores.jsp">
                                         <i class="metismenu-icon fa fa-angle-down"></i>
                               				Proveedores
                                     </a>
@@ -161,7 +165,7 @@
                                 </li>
                                 
                                     <li>
-                                    <a href="Reportes.jsp"  class="mm-active">
+                                    <a href="Reportes.jsp" class="mm-active" >
                                         <i class="metismenu-icon fa fa-angle-down"></i>
                               				Reportes
                                     </a>
@@ -175,27 +179,76 @@
                     <div class="app-main__inner">
                
                         
-                    <div class="col-md-12 order-md-1">
-          <h4 class="mb-3">Reportes</h4>
-              <div class="col-md-10  mb-3 p-2 d-flex">
-                <button onclick="location.href='ReportesUsuarios.jsp'" class="btn btn-primary ml-10" type="submit" name="listado de usuarios">listado de usuarios</button>
-                     		
-                </div>
-           <div class="col-md-6  mb-3 p-2 d-flex">
-                <button onclick="location.href='ReportesClientes.jsp'" class="btn btn-primary ml-6" type="submit" name="listado de clientes">Listado de clientes</button>
+                       <div class="col-md-12 order-md-1">
+          <h4 class="mb-3">Total de Venta Por Cliente</h4>
+          <form action="ClientFuncionality" method="POST">
+              <div class="col-md-6  mb-3 p-0 d-flex">
+                
                      		
                 </div>
           
-          <div class="col-md-6  mb-3 p-2 d-flex">
-                <button onclick="location.href='ReportesVentaClientes.jsp'" class="btn btn-primary ml-6" type="submit" name="venta por cliente">Venta por cliente</button>
-                     		
-                </div>
-          
+          </form>
+          <form class="needs-validation" action="ClientFuncionality" method="POST" id="form">
+      
             <div class="row">
             
-              </div>
-
            
+            <sql:setDataSource
+        var="myDS"
+        driver="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://localhost:3306/tienda"
+        user="root" password="alejandro"
+    />
+     
+    <sql:query var="listVentas"   dataSource="${myDS}">
+        SELECT * FROM venta; 
+    </sql:query>
+     
+    <div align="center">
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>Código</th>
+                <th>Cédula Del Cliente</th>
+                <th>Cédula Del Usuario</th>
+                <th>Iva de  la Venta </th>
+                <th>Total de la venta </th>
+                <th>Valor de la venta </th>
+            </tr>
+            <c:forEach var="venta" items="${listVentas.rows}">
+                <tr>
+                    <td><c:out value="${venta.codigo}" /></td>
+                    <td><c:out value="${venta.cedula_cliente}" /></td>
+                    <td><c:out value="${venta.cedula_usuario}" /></td>
+                    <td><c:out value="${venta.ivaventa}" /></td>
+                    <td><c:out value="${venta.total_venta}" /></td>
+                    <td><c:out value="${venta.valor_venta}" /></td>
+             
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
+
+						
+
+            </div>
+
+          
+            <div class="mb-3">
+              <label for="address">Total Ventas $</label>
+              <input type="tel" class="form-control" placeholder="COP" id="tel" name="tel" value="<% if(request.getAttribute("ResponseClient") != null){
+			        	
+                		ResponseClient respuesta  = (ResponseClient)request.getAttribute("ResponseClient");
+			        	if(respuesta.getListado() != null){
+			        	out.print(respuesta.getListado().get(0).getDireccion());
+			        	}
+			   		}
+			     	%>" required>
+             
+            </div>
+
+     
+           
+          </form>
         </div>
 
            </div>
@@ -204,13 +257,13 @@
         </div>
     </div>
     <script>
-	<% if(request.getAttribute("Response") != null){
+	<% if(request.getAttribute("ResponseClient") != null){
     	
-    	Response respuesta  = (Response)request.getAttribute("Response");
-    
- 	
+		ResponseClient respuesta  = (ResponseClient)request.getAttribute("ResponseClient");
+				
      %>
      alert('<%out.print(respuesta.Mensaje);%>');
+	
     <%} %>
 
     </script>

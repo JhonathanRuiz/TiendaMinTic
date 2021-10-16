@@ -7,7 +7,7 @@
 			response.sendRedirect("index.jsp");
     	}
     %>
-   <%@ page import = "com.unibosque.Service.UserServiceImpl,com.unibosque.Model.Response,com.unibosque.Model.User" %>
+   <%@ page import = "com.unibosque.Service.UserServiceImpl,com.unibosque.Model.ResponseClient,com.unibosque.Model.Client" %>
 <!doctype html>
 <html lang="es">
 
@@ -16,7 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Productos</title>
+    <title>Analytics Dashboard - This is an example dashboard created using build-in elements and components.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
@@ -134,14 +134,14 @@
                                     </a>
                                 </li>
                                    <li>
-                                    <a href="Clientes.jsp" >
+                                    <a href="Clientes.jsp"  >
                                         <i class="metismenu-icon fa fa-angle-down"></i>
                               				Clientes
                                     </a>
                                 </li>
                                 
                                     <li>
-                                    <a href="Proveedores.jsp"  >
+                                    <a href="Proveedores.jsp">
                                         <i class="metismenu-icon fa fa-angle-down"></i>
                               				Proveedores
                                     </a>
@@ -161,7 +161,7 @@
                                 </li>
                                 
                                     <li>
-                                    <a href="Reportes.jsp"  class="mm-active">
+                                    <a href="Reportes.jsp" class="mm-active">
                                         <i class="metismenu-icon fa fa-angle-down"></i>
                               				Reportes
                                     </a>
@@ -176,26 +176,31 @@
                
                         
                     <div class="col-md-12 order-md-1">
-          <h4 class="mb-3">Reportes</h4>
-              <div class="col-md-10  mb-3 p-2 d-flex">
-                <button onclick="location.href='ReportesUsuarios.jsp'" class="btn btn-primary ml-10" type="submit" name="listado de usuarios">listado de usuarios</button>
-                     		
-                </div>
-           <div class="col-md-6  mb-3 p-2 d-flex">
-                <button onclick="location.href='ReportesClientes.jsp'" class="btn btn-primary ml-6" type="submit" name="listado de clientes">Listado de clientes</button>
+          <h4 class="mb-3">Listado de usuarios</h4>
+          <form action="ClientFuncionality" method="POST">
+              <div class="col-md-6  mb-3 p-0 d-flex">
+                
                      		
                 </div>
           
-          <div class="col-md-6  mb-3 p-2 d-flex">
-                <button onclick="location.href='ReportesVentaClientes.jsp'" class="btn btn-primary ml-6" type="submit" name="venta por cliente">Venta por cliente</button>
-                     		
-                </div>
-          
+          </form>
+          <form class="needs-validation" action="ClientFuncionality" method="POST" id="form">
+      
             <div class="row">
             
-              </div>
-
+           <div class="col-md-12 mb-4">
+                <label for="cedula">Cedula</label>
+                <label for="lastName">Nombre</label>
+                <label for="firstName">Correo Electronico</label>
+                <label for="firstName">Usuario</label>
+                <label for="firstName">Password</label>
+                
+               
+             
+            </div>
+     
            
+          </form>
         </div>
 
            </div>
@@ -204,13 +209,13 @@
         </div>
     </div>
     <script>
-	<% if(request.getAttribute("Response") != null){
+	<% if(request.getAttribute("ResponseClient") != null){
     	
-    	Response respuesta  = (Response)request.getAttribute("Response");
-    
- 	
+		ResponseClient respuesta  = (ResponseClient)request.getAttribute("ResponseClient");
+				
      %>
      alert('<%out.print(respuesta.Mensaje);%>');
+	
     <%} %>
 
     </script>
