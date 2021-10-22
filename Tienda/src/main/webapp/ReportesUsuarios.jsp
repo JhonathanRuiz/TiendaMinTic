@@ -7,6 +7,8 @@
 			response.sendRedirect("index.jsp");
     	}
     %>
+    <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/sql" prefix = "sql"%>
    <%@ page import = "com.unibosque.Service.UserServiceImpl,com.unibosque.Model.ResponseClient,com.unibosque.Model.Client" %>
 <!doctype html>
 <html lang="es">
@@ -188,17 +190,37 @@
       
             <div class="row">
             
-           <div class="col-md-12 mb-4">
-                <label for="cedula">Cedula</label>
-                <label for="lastName">Nombre</label>
-                <label for="firstName">Correo Electronico</label>
-                <label for="firstName">Usuario</label>
-                <label for="firstName">Password</label>
-                
-               
-             
-            </div>
+           <sql:setDataSource
+        var="myDS"
+        driver="org.sqlite.JDBC"
+        url="jdbc:sqlite:C:/sqlite/tienda.db"
+    />
      
+    <sql:query var="listUsuarios"   dataSource="${myDS}">
+        SELECT * FROM usuarios; 
+    </sql:query>
+     
+    <div align="center">
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>Cédula</th>
+                <th>Nombre</th>
+                <th>Correo Electronico</th>
+                <th>Usuario </th>
+                <th>Password </th>
+            </tr>
+            <c:forEach var="usuarios" items="${listUsuarios.rows}">
+                <tr>
+                    <td><c:out value="${usuarios.cedula}" /></td>
+                    <td><c:out value="${usuarios.nombre}" /></td>
+                    <td><c:out value="${usuarios.correo}" /></td>
+                    <td><c:out value="${usuarios.usuario}" /></td>
+                    <td><c:out value="${usuarios.password}" /></td>             
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
+
            
           </form>
         </div>

@@ -7,8 +7,9 @@
 			response.sendRedirect("index.jsp");
     	}
     %>
-   <%@ page import = "com.unibosque.Service.UserServiceImpl,com.unibosque.Model.ResponseClient,com.unibosque.Model.Client" %>
-
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/sql" prefix = "sql"%>
+<%@ page import = "com.unibosque.Service.UserServiceImpl,com.unibosque.Model.ResponseClient,com.unibosque.Model.Client" %>
 
 <!doctype html>
 
@@ -195,9 +196,8 @@
            
             <sql:setDataSource
         var="myDS"
-        driver="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://localhost:3306/tienda"
-        user="root" password="alejandro"
+        driver="org.sqlite.JDBC"
+        url="jdbc:sqlite:C:/sqlite/tienda.db"
     />
      
     <sql:query var="listVentas"   dataSource="${myDS}">
