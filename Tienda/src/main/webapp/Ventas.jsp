@@ -7,11 +7,32 @@
 			response.sendRedirect("index.jsp");
     	}
     %>
-   <%@ page import = "com.unibosque.Service.UserServiceImpl,com.unibosque.Model.Response,com.unibosque.Model.User" %>
+   <%@ page import = "com.unibosque.Service.VentasServiceImpl,com.unibosque.Model.ResponseVentas,com.unibosque.Model.Venta,com.unibosque.Model.ResponseProduct,com.unibosque.Model.Response" %>
 <!doctype html>
 <html lang="es">
 
 <head>
+<style>
+
+        .delete-btn {
+            position: relative;
+        }
+
+        .delete {
+            display: block;
+            color: #000;
+            text-decoration: none;
+            position: absolute;
+            background: #EEEEEE;
+            font-weight: bold;
+            padding: 0px 3px;
+            border: 1px solid;
+            top: -6px;
+            left: -6px;
+            font-family: Verdana;
+            font-size: 12px;
+        }
+</style>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
@@ -172,75 +193,231 @@
                         </div>
                     </div>
                 </div>    <div class="app-main__outer">
-                    <div class="app-main__inner">
-               
-                        
-                    <div class="col-md-12 order-md-1">
-          <h4 class="mb-3">Usuarios</h4>
-          <form action="UserFuncionality" method="POST">
-              <div class="col-md-6  mb-3 p-0 d-flex">
-                <input type="text" class="form-control" id="cedulacons" name="cedulacons" placeholder="Cedula"><button class="btn btn-primary ml-2" type="submit" name="consultar">Consultar</button>
-                 <input type="text"class="form-control" id="nombrecliente" name="nombrecliente" placeholder="Nombre Cliente" value="<%if(request.getAttribute("ResponseVentas") != null){
- 			        	
- 			        	Response respuesta  = (Response)request.getAttribute("ResponseVentas");
- 			        	if(respuesta.getListado() != null){
- 			        	out.print(respuesta.getListado().get(0).getUsuario());
- 			        	}
- 			   		} %>" readonly>
-                </div>
-          
-          </form>
-          <form class="needs-validation" action="UserFuncionality" method="POST">
-      
-            <div class="row">
-        		
-            </div>
-
-            <div class="mb-3">
-              <label for="username">Username</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">@</span>
-                </div>
-                <input type="text" class="form-control" name="username" id="username" placeholder="Username" value="<% if(request.getAttribute("ResponseVentas") != null){
-			        	
-			        	Response respuesta  = (Response)request.getAttribute("ResponseVentas");
-			        	if(respuesta.getListado() != null){
-			        	out.print(respuesta.getListado().get(0).getUsuario());
-			        	}
-			   		}
-			     	%>" required>
-               
-              </div>
-            </div>
-
-          
-            <div class="mb-3">
-              <label for="address">Contraseña</label>
-              <input type="password" class="form-control" id="password" name="password" required>
-              <div class="invalid-feedback">
-                Please enter your shipping address.
-              </div>
-            </div>
-
-     
-            <hr class="mb-4">
-            <button class="btn btn-primary btn-lg " type="submit" name="crear" value="Crear">Crear</button>
-     		<button class="btn btn-primary btn-lg " type="submit" name="editar" value="Editar">Editar</button>
-
                 
-          </form>
-        </div>
+                    <div class="app-main__inner">
+                    <form action="VentaFuncionality" method="post">
+                     <div class="container">
+                  
+                        <div class="consulta d-flex">
 
+                                <label class="d-flex" for="">Cedula: <input type="text" class="form-control ml-2" name="cedulacons" id="cedulacons"  value="<% if(request.getAttribute("Response") != null){
+			        	
+                                		Response respuesta  = (Response)request.getAttribute("Response");
+				        	if(respuesta.getListado() != null){
+				        		out.print(respuesta.getListado().get(0).getCedula());
+	        				}
+			   		}
+			     	%>"><input
+                                        type="submit" class="btn btn-primary ml-2" name="consultar"  ID="consultar" value="Consultar"></label>
+                         
+
+
+                            <div class="d-flex ml-2">
+                                <label for="">Cliente: </label>
+                                <input type="text" class="form-control" readonly value="<% if(request.getAttribute("Response") != null){
+			        	
+                		Response respuesta  = (Response)request.getAttribute("Response");
+				        	if(respuesta.getListado() != null){
+				        		out.print(respuesta.getListado().get(0).getNombre());
+	        				}
+			   		}
+			     	%>">
+                            </div>
+                            <div class="d-flex">
+                                <label for="">Consecutivo:</label>
+                                <input type="text" class="form-control" readonly name="cedula_cliente" value="<% if(request.getAttribute("Response") != null){
+			        	
+                                		Response respuesta  = (Response)request.getAttribute("Response");
+				        	if(respuesta.getListado() != null){
+				        		out.print(respuesta.getListado().get(0).getCedula());
+	        				}
+			   		}
+			     	%>">
+
+                            </div>
+                        </div>
+
+                        <div class="productos d-flex">
+                         
+                         <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr class="item-row">
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                     
+                
+                      <tr class="item-row">
+                         
+                            <td><div class="input-group mb-3">
+                        
+							  <input type="text" class="form-control" placeholder="Id" name="codigo1" id="codigo1" aria-label="Recipient's username" aria-describedby="basic-addon2" value="<% if(request.getAttribute("ResponseProduct") != null){
+			        	
+                                                        		ResponseProduct respuesta  = (ResponseProduct)request.getAttribute("ResponseProduct");
+										        	if(respuesta.getListado() != null){
+										        		out.print(respuesta.getListado().get(0).getCodigo());
+							        				}
+									   		}
+									     	%>">
+							  <div class="input-group-append">
+							    <input  class="btn btn-outline-secondary" type="submit" name="consultaprod1"  value="Consultar">
+							  </div>
+						
+							</div>
+							</td>
+							
+                                                        <td><input class="form-control item" placeholder="Nombre" type="text" name="nombre1" required readonly value="<% if(request.getAttribute("ResponseProduct") != null){
+			        	
+                                                        		ResponseProduct respuesta  = (ResponseProduct)request.getAttribute("ResponseProduct");
+										        	if(respuesta.getListado() != null){
+										        		out.print(respuesta.getListado().get(0).getNombre());
+							        				}
+									   		}
+									     	%>"></td>
+                            <td><input class="form-control price" placeholder="Precio" type="text" readonly value="<% if(request.getAttribute("ResponseProduct") != null){
+			        	
+                                                        		ResponseProduct respuesta  = (ResponseProduct)request.getAttribute("ResponseProduct");
+										        	if(respuesta.getListado() != null){
+										        		out.print(respuesta.getListado().get(0).getPrecio_venta());
+							        				}
+									   		}
+									     	%>"></td>
+                            <td><input class="form-control qty" placeholder="Cantidad" name="cantidad1" type="text" value="<% if(request.getAttribute("ResponseProduct") != null){out.print("1"); }%>"></td>
+                            <td><input class="form-control total" name="total1" type="text" value="0" readonly></td>
+                        
+                        </tr>
+                        
+                      <tr class="item-row">
+                
+                               <td><div class="input-group mb-3">
+                        
+							  <input type="text" class="form-control" placeholder="Id" name="codigo2" id="codigo2" aria-label="Recipient's username" aria-describedby="basic-addon2" value="<% if(request.getAttribute("ResponseProduct") != null){
+			        	
+                                                        		ResponseProduct respuesta  = (ResponseProduct)request.getAttribute("ResponseProduct");
+										        	if(respuesta.getListado().size()>=2){
+										        		out.print(respuesta.getListado().get(1).getCodigo());
+							        				}
+									   		}
+									     	%>">
+							  <div class="input-group-append">
+							    <input  class="btn btn-outline-secondary" type="submit" name="consultaprod2"  value="Consultar">
+							  </div>
+						
+							</div>
+							</td>
+							
+                                                        <td><input class="form-control item" placeholder="Nombre" type="text" name="nombre2" required readonly value="<% if(request.getAttribute("ResponseProduct") != null){
+			        	
+                                                        		ResponseProduct respuesta  = (ResponseProduct)request.getAttribute("ResponseProduct");
+										        	if(respuesta.getListado().size()>=2){
+										        		out.print(respuesta.getListado().get(1).getNombre());
+							        				}
+									   		}
+									     	%>"></td>
+                            <td><input class="form-control price" placeholder="Precio" type="text" readonly value="<% if(request.getAttribute("ResponseProduct") != null){
+			        	
+                                                        		ResponseProduct respuesta  = (ResponseProduct)request.getAttribute("ResponseProduct");
+										        	if(respuesta.getListado().size()>=2){
+										        		out.print(respuesta.getListado().get(1).getPrecio_venta());
+							        				}
+									   		}
+									     	%>"></td>
+                            <td><input class="form-control qty" placeholder="Cantidad" name="cantidad2" type="text" value="<% if(request.getAttribute("ResponseProduct") != null){out.print("1"); }%>"></td>
+                            <td><input class="form-control total" name="total2" type="text" value="0" readonly></td>
+                        
+                        
+                        <tr>
+                        
+                           <tr class="item-row">
+                                <td><div class="input-group mb-3">
+                        
+							  <input type="text" class="form-control" placeholder="Id" name="codigo3" id="codigo3" aria-label="Recipient's username" aria-describedby="basic-addon2" value="<% if(request.getAttribute("ResponseProduct") != null){
+			        	
+                                                        		ResponseProduct respuesta  = (ResponseProduct)request.getAttribute("ResponseProduct");
+										        	if(respuesta.getListado().size() >= 3){
+										        		out.print(respuesta.getListado().get(2).getCodigo());
+							        				}
+									   		}
+									     	%>">
+							  <div class="input-group-append">
+							    <input  class="btn btn-outline-secondary" type="submit" name="consultaprod3"  value="Consultar">
+							  </div>
+						
+							</div>
+							</td>
+							
+                                                        <td><input class="form-control item" placeholder="Nombre" type="text" name="nombre3" required readonly value="<% if(request.getAttribute("ResponseProduct") != null){
+			        	
+                                                        		ResponseProduct respuesta  = (ResponseProduct)request.getAttribute("ResponseProduct");
+										        	if((respuesta.getListado().size() >= 3)){
+										        		out.print(respuesta.getListado().get(2).getNombre());
+							        				}
+									   		}
+									     	%>"></td>
+                            <td><input class="form-control price" placeholder="Precio" type="text" readonly value="<% if(request.getAttribute("ResponseProduct") != null){
+			        	
+                                                        		ResponseProduct respuesta  = (ResponseProduct)request.getAttribute("ResponseProduct");
+										        	if(respuesta.getListado().size()>=3){
+										        		out.print(respuesta.getListado().get(2).getPrecio_venta());
+							        				}
+									   		}
+									     	%>"></td>
+                            <td><input class="form-control qty" placeholder="Cantidad" name="cantidad3" type="text" value="<% if(request.getAttribute("ResponseProduct") != null){out.print("1"); }%>"></td>
+                            <td><input class="form-control total" name="total3" type="text" value="0" readonly></td>
+                        
+                        
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td class="text-right"><strong>Sub Total</strong></td>
+                            <td><input type="text" name="subtotal" id="subtotal" value="0" readonly class="form-control"></td>
+                        </tr>
+                       
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td class="text-right"><strong>Grand Total</strong></td>
+                            <td><input type="text" name="totalda" id="grandTotal"  readonly class="form-control"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <input type="submit" name="confirmar" value="Confirmar" class="btn btn-primary">
+                </div>
+            </div>
+        </div>
+                        </div>
+
+
+                    </div>
+                    </form>
+                </div>
+                        </div>
+        
            </div>
                      </div>
                 <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
-        </div>
-    </div>
+ 
     <script>
-	<% if(request.getAttribute("ResponseVentas") != null){
+	<% if(request.getAttribute("Response") != null){
     	
-    	Response respuesta  = (Response)request.getAttribute("ResponseVentas");
+		Response respuesta  = (Response)request.getAttribute("Response");
+    
+ 	
+     %>
+     alert('<%out.print(respuesta.Mensaje);%>');
+    <%} %>
+    
+	<% if(request.getAttribute("ResponseProduct") != null){
+    	
+		ResponseProduct respuesta  = (ResponseProduct)request.getAttribute("ResponseProduct");
     
  	
      %>
@@ -248,6 +425,30 @@
     <%} %>
 
     </script>
-<script type="text/javascript" src="./assets/scripts/main.js"></script></body>
+<script type="text/javascript" src="./assets/scripts/main.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="./assets/js/jquery.invoice.js"></script>
+
+    <script>
+        jQuery(document).ready(function(){
+            jQuery().invoice({
+                addRow : "#addRow",
+                delete : ".delete",
+                parentClass : ".item-row",
+
+                price : ".price",
+                qty : ".qty",
+                total : ".total",
+                totalQty: "#totalQty",
+
+                subtotal : "#subtotal",
+                discount: "#discount",
+                shipping : "#shipping",
+                grandTotal : "#grandTotal"
+            });
+        });
+    </script>
+</body>
+
 </html>
     

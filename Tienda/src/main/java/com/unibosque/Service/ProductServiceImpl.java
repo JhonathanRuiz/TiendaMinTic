@@ -1,18 +1,39 @@
 package com.unibosque.Service;
 
 import java.io.BufferedInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import org.apache.commons.io.FileUtils;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.unibosque.Model.ResponseProduct;
+import com.unibosque.Model.ResponseT;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 import com.unibosque.Model.Product;
 
 public class ProductServiceImpl {
@@ -27,7 +48,7 @@ public class ProductServiceImpl {
 	public ResponseProduct readAllProducts() {
 		ResponseProduct res = new ResponseProduct();
 			try {
-			       URL ul1 = new URL("http://localhost:8080/api/clients/");
+			       URL ul1 = new URL("http://localhost:8080/api/products/");
 
 			       HttpURLConnection urlC = (HttpURLConnection) ul1.openConnection();
 			       urlC.setRequestMethod("GET");
@@ -76,11 +97,12 @@ public class ProductServiceImpl {
 			  }
 			return res;
 	}
-	public ResponseProduct getProduct(String cedula) {
+	
+	public ResponseProduct getProduct(String codigo) {
 		ResponseProduct res = new ResponseProduct();
 	
 			try {
-			       URL ul1 = new URL("http://localhost:8080/api/clients/" + cedula);
+			       URL ul1 = new URL("http://localhost:8080/api/products/" + codigo);
 
 			       HttpURLConnection urlC = (HttpURLConnection) ul1.openConnection();
 			       urlC.setRequestMethod("GET");
@@ -279,6 +301,23 @@ public class ProductServiceImpl {
 			return res;
 	}
 	
+	public void uploadCSV(String filepath) throws IOException {
+		OkHttpClient client = new OkHttpClient().newBuilder()
+				  .build();
+				MediaType mediaType = MediaType.parse("text/csv");
+				RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+				  .addFormDataPart("file","/C:/Users/jhrui/OneDrive/Documentos/productos.csv",
+				    RequestBody.create(MediaType.parse("application/octet-stream"),
+				    new File("/C:/Users/jhrui/OneDrive/Documentos/productos.csv")))
+				  .build();
+				Request request = new Request.Builder()
+				  .url("http://localhost:8080/api/csv/upload")
+				  .method("POST", body)
+				  .build();
+				Response response = client.newCall(request).execute();
+				System.out.print(response.message());
+	}
+	
 	public ResponseProduct updateProduct(Product user) {
 		ResponseProduct res = new ResponseProduct();
 			try {
@@ -351,52 +390,10 @@ public class ProductServiceImpl {
 			return res;
 	}
 	
-	public ResponseProduct deleteProduct(String cedula) {
-		ResponseProduct res = new ResponseProduct();
-			try {
-			       URL ul1 = new URL("http://localhost:8080/api/clients/" + cedula);
 
-			       HttpURLConnection urlC = (HttpURLConnection) ul1.openConnection();
-			       urlC.setRequestMethod("DELETE");
+	
 
-			 
-			       
-			       int responseCode = urlC.getResponseCode();
-			     
-			       if(responseCode == 200) {
-			    	    res.Respuesta = "00";
-					    res.Mensaje = "Eliminado Exitoso";
-					    res.Listado = null;
-			       }else if (responseCode == 404) {
-			    	   res.Respuesta = "99";
-					    res.Mensaje = "No encontrado";
-					    res.Listado = null;
-			       }
-			       else {
-			    	   res.Respuesta = "98";
-					    res.Mensaje = urlC.getResponseMessage();
-					    res.Listado = null;
-			    	   
-			       }
-			       
-			   
-			      
-			  } catch (MalformedURLException ex) {
-			            System.out.println(ex.getMessage());
-			            res.Respuesta = "99";
-					       res.Mensaje = "Error de MailformedURL";
-					       res.Listado = null;
-					   	return res;
-			  } catch (IOException | NullPointerException ex) {
-			            System.out.println(ex.getMessage());
-			            res.Respuesta = "98";
-					       res.Mensaje = "Error de IO";
-					       res.Listado = null;
-					   	return res;
-					       
-			  }
-			return res;
-	}
-	
-	
+
+
+
 }

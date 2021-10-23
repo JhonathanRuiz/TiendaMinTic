@@ -7,7 +7,7 @@
 			response.sendRedirect("index.jsp");
     	}
     %>
-   <%@ page import = "com.unibosque.Service.UserServiceImpl,com.unibosque.Model.Response,com.unibosque.Model.User" %>
+   <%@ page import = "com.unibosque.Service.UserServiceImpl,com.unibosque.Model.ResponseT,com.unibosque.Model.User" %>
 <!doctype html>
 <html lang="es">
 
@@ -187,9 +187,9 @@
         </div>
     </div>
     <script>
-	<% if(request.getAttribute("Response") != null){
+	<% if(request.getAttribute("ResponseT") != null){
     	
-    	Response respuesta  = (Response)request.getAttribute("Response");
+    	ResponseT respuesta  = (ResponseT)request.getAttribute("ResponseT");
     
  	
      %>

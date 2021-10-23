@@ -178,80 +178,8 @@
                 </div>    <div class="app-main__outer">
                     <div class="app-main__inner">
                
-                        
-                       <div class="col-md-12 order-md-1">
-          <h4 class="mb-3">Total de Venta Por Cliente</h4>
-          <form action="ClientFuncionality" method="POST">
-              <div class="col-md-6  mb-3 p-0 d-flex">
-                
-                     		
-                </div>
-          
-          </form>
-          <form class="needs-validation" action="ClientFuncionality" method="POST" id="form">
-      
-            <div class="row">
-            
-           
-            <sql:setDataSource
-        var="myDS"
-        driver="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://localhost:3306/tienda"
-        user="root" password="alejandro"
-    />
      
-    <sql:query var="listVentas"   dataSource="${myDS}">
-        SELECT * FROM venta; 
-    </sql:query>
-     
-    <div align="center">
-        <table border="1" cellpadding="5">
-            <tr>
-                <th>Código</th>
-                <th>Cédula Del Cliente</th>
-                <th>Cédula Del Usuario</th>
-                <th>Iva de  la Venta </th>
-                <th>Total de la venta </th>
-                <th>Valor de la venta </th>
-            </tr>
-            <c:forEach var="venta" items="${listVentas.rows}">
-                <tr>
-                    <td><c:out value="${venta.codigo}" /></td>
-                    <td><c:out value="${venta.cedula_cliente}" /></td>
-                    <td><c:out value="${venta.cedula_usuario}" /></td>
-                    <td><c:out value="${venta.ivaventa}" /></td>
-                    <td><c:out value="${venta.total_venta}" /></td>
-                    <td><c:out value="${venta.valor_venta}" /></td>
-             
-                </tr>
-            </c:forEach>
-        </table>
-    </div>
-
-						
-
-            </div>
-
-          
-            <div class="mb-3">
-              <label for="address">Total Ventas $</label>
-              <input type="tel" class="form-control" placeholder="COP" id="tel" name="tel" value="<% if(request.getAttribute("ResponseClient") != null){
-			        	
-                		ResponseClient respuesta  = (ResponseClient)request.getAttribute("ResponseClient");
-			        	if(respuesta.getListado() != null){
-			        	out.print(respuesta.getListado().get(0).getDireccion());
-			        	}
-			   		}
-			     	%>" required>
-             
-            </div>
-
-     
-           
-          </form>
-        </div>
-
-           </div>
+     			      </div>
                      </div>
                 <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         </div>

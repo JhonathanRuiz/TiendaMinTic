@@ -117,10 +117,10 @@
                         </span>
                     </div>    <div class="scrollbar-sidebar">
                         <div class="app-sidebar__inner">
-                            <ul class="vertical-nav-menu">
+                                    <ul class="vertical-nav-menu">
                                 <li class="app-sidebar__heading">Dashboards</li>
                                 <li>
-                                    <a href="Panel.jsp" class="mm-active">
+                                    <a href="Panel.jsp"  class="mm-active">
                                         <i class="metismenu-icon fa fa-angle-down"></i>
                                         Inicio
                                     </a>
@@ -128,7 +128,40 @@
                                  <li>
                                     <a href="Usuarios.jsp" >
                                         <i class="metismenu-icon fa fa-angle-down"></i>
-                              				Usuario
+                              				Usuarios
+                                    </a>
+                                </li>
+                                   <li>
+                                    <a href="Clientes.jsp" >
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Clientes
+                                    </a>
+                                </li>
+                                
+                                    <li>
+                                    <a href="Proveedores.jsp">
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Proveedores
+                                    </a>
+                                </li>
+                                 <li>
+                                    <a href="Productos.jsp" >
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Productos
+                                    </a>
+                                </li>
+                                
+                                   <li>
+                                    <a href="Ventas.jsp">
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Ventas
+                                    </a>
+                                </li>
+                                
+                                    <li>
+                                    <a href="Reportes.jsp" >
+                                        <i class="metismenu-icon fa fa-angle-down"></i>
+                              				Reportes
                                     </a>
                                 </li>
                                 
